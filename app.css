@@ -1,3 +1,62 @@
 * {
   box-sizing: border-box;
 }
+
+/* General styles */
+
+section,
+h1,
+.board > div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+section {
+  width: 100vw;
+  height: 100vh;
+
+  flex-direction: column;
+}
+
+h1 {
+  height: 20%;
+
+  font-size: 3rem;
+}
+
+/* playArea styles */
+
+.playArea {
+  height: 80%;
+}
+
+.board {
+  width: 35vw;
+  height: 35vw;
+  min-width: 150px;
+  min-height: 150px;
+
+  display: grid;
+  grid-template-rows: repeat(3, 1fr);
+  grid-template-columns: repeat(3, 1fr);
+
+  background-color: antiquewhite;
+}
+
+.board > div {
+  min-width: 50px;
+  min-height: 50px;
+}
+.board > div:hover {
+  background-color: rgb(167, 152, 134);
+}
+
+/* Media queries */
+
+@media (max-width: 768px) {
+  .board {
+    width: 60vw;
+    height: 60vw;
+  }
+}
