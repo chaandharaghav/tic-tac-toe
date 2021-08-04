@@ -12,7 +12,12 @@ const gameBoard = (function () {
     board[row][col] = value;
   };
 
-  return { getValue, setValue };
+  const getBoard = function () {
+    // creating a deep copy of board and returning
+    return JSON.parse(JSON.stringify(board));
+  };
+
+  return { getValue, setValue, getBoard };
 })();
 
 const displayController = (function () {
@@ -38,4 +43,46 @@ const displayController = (function () {
   const updateDisplay = function (cell, row, col) {
     cell.innerText = gameBoard.getValue(row, col);
   };
+})();
+
+const game = (function () {
+  let board = gameBoard.getBoard();
+
+  const cloneBoard = function () {
+    board = gameBoard.getBoard();
+  };
+
+  const isRowSame = function () {
+    for (let row of board) {
+      if (row[0] === row[1] && row[1] === row[2]) {
+        return row[0];
+      }
+    }
+    return false;
+  };
+  const isColSame = function () {
+    for (let col = 0; col < 3; col++) {
+      if (board[0][col] === board[1][col] && board[1][col] === board[2][col]) {
+        return board[0][col];
+      }
+    }
+    return false;
+  };
+
+  const isDiagonalSame = function () {
+    if (board[0][0] === board[1][1] && board[2][2] === board[2][2]) {
+      return board[0][0];
+    } else if (board[0][2] === board[1][1] && board[1][1] === board[2][0]) {
+      return board[0][2];
+    } else {
+      return false;
+    }
+  };
+
+  const isGameOver = function () {
+    cloneBoard();
+    return isRowSame() || isColSame() || isDiagonalSame();
+  };
+
+  return { isGameOver };
 })();
