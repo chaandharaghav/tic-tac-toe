@@ -56,22 +56,10 @@ const displayController = (function () {
       gameOutcome.innerText = `Player ${gameOver.toUpperCase()} wins`;
       gameOutcome.classList.add("winner");
       return gameOver;
-    } else if (allCellsFilled()) {
+    } else if (game.allCellsFilled()) {
       gameOutcome.innerText = `It is a draw`;
       gameOutcome.classList.add("draw");
     }
-  };
-
-  const allCellsFilled = function () {
-    const board = gameBoard.getBoard();
-    for (let row of board) {
-      for (let elem of row) {
-        if (elem === "") {
-          return false;
-        }
-      }
-    }
-    return true;
   };
 })();
 
@@ -109,10 +97,22 @@ const game = (function () {
     }
   };
 
+  const allCellsFilled = function () {
+    const board = gameBoard.getBoard();
+    for (let row of board) {
+      for (let elem of row) {
+        if (elem === "") {
+          return false;
+        }
+      }
+    }
+    return true;
+  };
+
   const isGameOver = function () {
     cloneBoard();
     return isRowSame() || isColSame() || isDiagonalSame();
   };
 
-  return { isGameOver };
+  return { isGameOver, allCellsFilled };
 })();
