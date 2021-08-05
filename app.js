@@ -18,7 +18,15 @@ const gameBoard = (function () {
     return JSON.parse(JSON.stringify(board));
   };
 
-  return { getValue, setValue, getBoard };
+  const resetBoard = function () {
+    for (let row = 0; row < 3; row++) {
+      for (let col = 0; col < 3; col++) {
+        board[row][col] = "";
+      }
+    }
+  };
+
+  return { getValue, setValue, getBoard, resetBoard };
 })();
 
 // controls the visual changes
@@ -40,6 +48,10 @@ const displayController = (function () {
   }
 
   let currentValue = "X";
+
+  const setDefaultCurrent = function () {
+    currentValue = "X";
+  };
 
   const updateGameBoard = function (row, col) {
     if (gameBoard.getValue(row, col) === "") {
@@ -103,6 +115,7 @@ const displayController = (function () {
     playArea.classList.toggle("hide");
     gameDetails.classList.toggle("hide");
   });
+  return { setDefaultCurrent };
 })();
 
 // for controlling game logic
@@ -122,6 +135,7 @@ const game = (function () {
     }
     return false;
   };
+
   const isColSame = function () {
     for (let col = 0; col < 3; col++) {
       if (board[0][col] === board[1][col] && board[1][col] === board[2][col]) {
@@ -158,7 +172,7 @@ const game = (function () {
     return isRowSame() || isColSame() || isDiagonalSame();
   };
 
-  return { isGameOver, allCellsFilled };
+  return { isGameOver, allCellsFilled, cloneBoard };
 })();
 
 // module for managing players
@@ -178,3 +192,24 @@ const player = (function () {
 
   return { findPlayerName, makePlayer, logPlayers };
 })();
+
+const resetBtn = document.querySelector("#resetBoard");
+resetBtn.addEventListener("click", function () {
+  // reset board and set symbol to 'X'
+  gameBoard.resetBoard();
+  displayController.setDefaultCurrent();
+
+  // update cells in display
+  const cells = document.querySelectorAll(".board > *");
+  for (let cell of cells) {
+    cell.innerText = "";
+  }
+
+  // reset announced result from last game (if present)
+  const gameOutcome = document.querySelector(".gameOutcome");
+  gameOutcome.innerText = "";
+  gameOutcome.classList.remove("winner", "draw");
+
+  // update board value in game module
+  game.cloneBoard();
+});
