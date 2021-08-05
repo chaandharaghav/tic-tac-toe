@@ -1,3 +1,4 @@
+// setting up the board to use in other modules
 const gameBoard = (function () {
   const board = [
     ["", "", ""],
@@ -19,6 +20,8 @@ const gameBoard = (function () {
 
   return { getValue, setValue, getBoard };
 })();
+
+// controls the visual changes
 
 const displayController = (function () {
   const cells = document.querySelectorAll(".board > *");
@@ -53,7 +56,7 @@ const displayController = (function () {
     const gameOver = game.isGameOver();
     const gameOutcome = document.querySelector(".gameOutcome");
     if (gameOver) {
-      gameOutcome.innerText = `Player ${gameOver.toUpperCase()} wins`;
+      gameOutcome.innerText = `${player.findPlayerName(gameOver)} wins`;
       gameOutcome.classList.add("winner");
       return gameOver;
     } else if (game.allCellsFilled()) {
@@ -101,6 +104,8 @@ const displayController = (function () {
     gameDetails.classList.toggle("hide");
   });
 })();
+
+// for controlling game logic
 
 const game = (function () {
   let board = gameBoard.getBoard();
@@ -156,15 +161,20 @@ const game = (function () {
   return { isGameOver, allCellsFilled };
 })();
 
+// module for managing players
+
 const player = (function () {
   players = [];
   const logPlayers = function () {
     return players;
+  };
+  const findPlayerName = function (symbol) {
+    return players.find((player) => player.symbol === symbol).name;
   };
 
   const makePlayer = function (name, symbol) {
     players.push({ name, symbol });
   };
 
-  return { logPlayers, makePlayer };
+  return { findPlayerName, makePlayer, logPlayers };
 })();
