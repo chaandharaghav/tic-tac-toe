@@ -7,6 +7,7 @@
 section,
 h1,
 .playArea,
+.gameDetails form,
 .board > div {
   display: flex;
   justify-content: center;
@@ -24,6 +25,13 @@ h1 {
   height: 20%;
 
   font-size: 3rem;
+}
+
+.hide {
+  height: 0%;
+  position: absolute;
+  top: -9999px !important;
+  left: -9999px !important;
 }
 
 /* playArea styles */
@@ -77,11 +85,53 @@ h1 {
   background-color: rgb(194, 154, 122);
 }
 
+/* Game details styles */
+
+.gameDetails {
+  height: 80%;
+
+  padding-top: 3rem;
+
+  font-size: 2rem;
+}
+
+.gameDetails h2 {
+  font-size: 3rem;
+
+  margin-bottom: 2rem;
+}
+
+.gameDetails form {
+  flex-direction: column;
+}
+
+.gameDetails input {
+  height: 1.5rem;
+}
+.gameDetails input[type="checkbox"] {
+  padding: 1.5rem;
+  background-color: red;
+}
+
+.inputGroup {
+  margin: 2rem 0;
+}
+
 /* Media queries */
 
 @media (max-width: 768px) {
   .board {
     width: 60vw;
     height: 60vw;
+  }
+}
+@media (max-width: 425px) {
+  #playerDetails h2 {
+    font-size: 2.5rem;
+  }
+  .inputGroup {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
 }

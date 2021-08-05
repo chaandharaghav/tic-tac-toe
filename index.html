@@ -11,7 +11,7 @@
   <body>
     <section>
       <h1>Tic Tac Toe</h1>
-      <div class="playArea">
+      <div class="playArea hide">
         <div class="board">
           <div data-row="0" data-col="0"></div>
           <div data-row="0" data-col="1"></div>
@@ -24,6 +24,24 @@
           <div data-row="2" data-col="2"></div>
         </div>
         <p class="gameOutcome"></p>
+      </div>
+      <div class="gameDetails">
+        <form action="" id="playerDetails">
+          <h2>Input player Details</h2>
+          <div class="inputGroup">
+            <label for="p1Details">Player 1 name: </label>
+            <input type="text" id="p1Details" required />
+          </div>
+          <div class="inputGroup">
+            <label for="p2Details">Player 2 name: </label>
+            <input type="text" id="p2Details" required />
+          </div>
+          <div class="inputGroup">
+            <label for="vsComputer">Play against computer</label>
+            <input type="checkbox" id="vsComputer" required />
+          </div>
+          <button>Play game</button>
+        </form>
       </div>
     </section>
     <script src="app.js"></script>
