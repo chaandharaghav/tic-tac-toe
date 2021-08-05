@@ -6,6 +6,7 @@
 
 section,
 h1,
+.playArea,
 .board > div {
   display: flex;
   justify-content: center;
@@ -29,6 +30,9 @@ h1 {
 
 .playArea {
   height: 80%;
+
+  flex-direction: column;
+  justify-content: space-around;
 }
 
 .board {
@@ -58,6 +62,19 @@ h1 {
 }
 .board > div:hover {
   background-color: rgb(167, 152, 134);
+}
+
+.gameOutcome {
+  font-size: 4rem;
+
+  margin-bottom: 5rem;
+}
+
+.winner {
+  background-color: rgb(85, 219, 58);
+}
+.draw {
+  background-color: rgb(194, 154, 122);
 }
 
 /* Media queries */
