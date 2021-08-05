@@ -36,12 +36,12 @@ const displayController = (function () {
     });
   }
 
-  let currentValue = "x";
+  let currentValue = "X";
 
   const updateGameBoard = function (row, col) {
     if (gameBoard.getValue(row, col) === "") {
       gameBoard.setValue(row, col, currentValue);
-      currentValue = currentValue === "x" ? "o" : "x";
+      currentValue = currentValue === "X" ? "O" : "X";
     }
   };
 
@@ -61,6 +61,45 @@ const displayController = (function () {
       gameOutcome.classList.add("draw");
     }
   };
+
+  // controls for taking game details input
+  const gameDetails = document.querySelector(".gameDetails");
+  const playerDetailsForm = document.querySelector("#playerDetails");
+  const vsComputer = document.querySelector("#vsComputer");
+
+  const playWithComputer = function () {
+    return vsComputer.checked;
+  };
+
+  vsComputer.addEventListener("change", function () {
+    const p2NameInput = document.querySelector("#p2Name");
+    const p2Div = p2NameInput.parentElement;
+    if (playWithComputer()) {
+      p2Div.classList.add("hide");
+      p2NameInput.required = false;
+    } else {
+      p2Div.classList.remove("hide");
+    }
+  });
+
+  playerDetailsForm.addEventListener("submit", function (e) {
+    e.preventDefault();
+    const p1Name = document.querySelector("#p1Name").value;
+    const p2Name = document.querySelector("#p2Name").value;
+
+    player.makePlayer(p1Name, "X");
+
+    if (playWithComputer()) {
+      player.makePlayer("Computer", "O");
+    } else {
+      player.makePlayer(p2Name, "O");
+    }
+
+    // hide gameDetails and show playArea
+    const playArea = document.querySelector(".playArea");
+    playArea.classList.toggle("hide");
+    gameDetails.classList.toggle("hide");
+  });
 })();
 
 const game = (function () {
@@ -115,4 +154,17 @@ const game = (function () {
   };
 
   return { isGameOver, allCellsFilled };
+})();
+
+const player = (function () {
+  players = [];
+  const logPlayers = function () {
+    return players;
+  };
+
+  const makePlayer = function (name, symbol) {
+    players.push({ name, symbol });
+  };
+
+  return { logPlayers, makePlayer };
 })();
